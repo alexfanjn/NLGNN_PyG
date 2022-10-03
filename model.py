@@ -36,13 +36,17 @@ class NLGNN(torch.nn.Module):
         if self.le == 'mlp':
             h = self.first_1(self.data.x)
             h = F.relu(h)
+            h = F.dropout(h, p=self.dropout, training=self.training)
             h = self.first_2(h)
-            h = F.relu(h)
+            # h = F.relu(h)
         else: #gcn or gat
             h = self.first_1(self.data.x, self.data.edge_index)
             h = F.relu(h)
+            h = F.dropout(h, p=self.dropout, training=self.training)
             h = self.first_2(h, self.data.edge_index)
-            h = F.relu(h)
+            # h = F.relu(h)
+
+        # h = F.dropout(h, p=self.dropout, training=self.training)
 
         before_h = h
 
@@ -53,8 +57,10 @@ class NLGNN(torch.nn.Module):
         h = h[sort_index].T.unsqueeze(0)
         h = self.conv1d1(h)
         h = F.relu(h)
+        h = F.dropout(h, p=self.dropout, training=self.training)
         h = self.conv1d2(h)
-        h = F.relu(h)
+        # h = F.relu(h)
+        # h = F.dropout(h, p=self.dropout, training=self.training)
 
         h = h.squeeze().T
         arg_index = torch.argsort(sort_index)
