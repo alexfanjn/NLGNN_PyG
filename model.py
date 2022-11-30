@@ -51,6 +51,9 @@ class NLGNN(torch.nn.Module):
         before_h = h
 
         a = self.attention_layer(h)
+
+
+
         sort_index = torch.argsort(a.flatten(), descending=True)
         h = a * h
 
@@ -70,4 +73,3 @@ class NLGNN(torch.nn.Module):
         final_h = self.final_layer(final_h)
 
         return F.log_softmax(final_h, 1)
-

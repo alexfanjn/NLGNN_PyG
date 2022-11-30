@@ -10,7 +10,7 @@ from model import NLGNN
 
 
 if __name__ == '__main__':
-    dataset_name = 'chameleon'
+    dataset_name = 'cornell'
     # dataset_name = 'Cora'
 
     heter_dataset = ['chameleon', 'cornell', 'film', 'squirrel', 'texas', 'wisconsin']

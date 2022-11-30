@@ -9,6 +9,8 @@ from sklearn.model_selection import train_test_split
 
 from torch_geometric.utils import sort_edge_index, from_scipy_sparse_matrix, to_scipy_sparse_matrix, degree
 import scipy.sparse as sp
+from torch.backends import cudnn
+
 
 
 def load_heter_data(dataset_name):
@@ -48,6 +50,8 @@ def set_seed(seed):
         torch.manual_seed(seed)
         torch.cuda.manual_seed(seed)
         # torch.cuda.manual_seed_all(seed)
+    cudnn.benchmark = False  # if benchmark=True, deterministic will be False
+    cudnn.deterministic = True
     return seed
 
 
